@@ -6,22 +6,11 @@ class UserTest < ActiveSupport::TestCase
     @user = User.new(name: "Example User", email: "user@example.com",
                      password: "foobar", password_confirmation: "foobar")
   end
-
-
-  test "should be valid" do
-    assert @user.valid?
+  
+  test "authenticated? should return false for a user with nil digest" do
+    assert_not @user.authenticated?('')
   end
 
-   test "name should not be too long" do
-    @user.name = "a" * 51
-    assert_not @user.valid?
-  end
-
- test "email addresses should be unique" do
-    duplicate_user = @user.dup
-    @user.save
-    assert_not duplicate_user.valid?
-  end
 
   # test "email validation should accept valid addresses" do
   #   valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
@@ -59,5 +48,4 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 end
-
 
